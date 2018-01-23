@@ -24,18 +24,23 @@ public class Ui extends JFrame implements Observer, LocalImage {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel view;
+	private final boolean connectNodes, cross;
 	private BufferedImage surface;
 
 	private Optional<Point> previous = Optional.empty();
 
-	public Ui() {
+	public Ui(boolean osrsView, boolean connectNodes, boolean cross) {
+		this.connectNodes = connectNodes;
+		this.cross = cross;
 
 		surface = new BufferedImage(765, 502, BufferedImage.TYPE_INT_RGB);
 
-		try {
-			surface = ImageIO.read(getStream("/map/OSRS_Blank.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (osrsView) {
+			try {
+				surface = ImageIO.read(getStream("/map/OSRS_Blank.jpg"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		view = new JLabel(new ImageIcon(surface));
@@ -44,14 +49,16 @@ public class Ui extends JFrame implements Observer, LocalImage {
 		setContentPane(view);
 	}
 
-	private void drawNode(int x, int y, boolean connect) {
+	private void drawNode(int x, int y) {
 		Graphics g = surface.getGraphics();
 
 		g.setColor(Color.CYAN);
-		g.drawLine(x - 1, y, x + 1, y);
-		g.drawLine(x, y + 1, x, y + 1);
+		if (cross) {
+			g.drawLine(x - 1, y, x + 1, y);
+			g.drawLine(x, y + 1, x, y + 1);
+		} else g.drawLine(x, y, x, y);
 
-		if (connect) {
+		if (connectNodes) {
 			g.setColor(Color.CYAN.darker());
 			previous.ifPresent(p -> g.drawLine(x, y, p.x, p.y));
 		}
@@ -62,7 +69,7 @@ public class Ui extends JFrame implements Observer, LocalImage {
 
 	@Override
 	public void pointClicked(Point p) {
-		drawNode(p.x, p.y, true);
+		drawNode(p.x, p.y);
 		previous = Optional.of(p);
 	}
 

@@ -23,7 +23,7 @@ public class Main extends Script implements Observer {
 		log("Script started: " + this.getName() + " by " + this.getAuthor() + ".");
 		getBot().addMouseListener(mouseTracker);
 
-		Ui ui = new Ui();
+		Ui ui = new Ui(true, false, false);
 		mouseTracker.registerObserver(ui);
 		mouseTracker.registerObserver(this);
 		ui.setVisible(true);
