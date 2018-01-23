@@ -24,14 +24,16 @@ public class Main extends Script implements Observer {
 		getBot().addMouseListener(mouseTracker);
 
 		Ui ui = new Ui(true, false, false);
+		Ui ui_connected = new Ui(true, true, false);
 		mouseTracker.registerObserver(ui);
+		mouseTracker.registerObserver(ui_connected);
 		mouseTracker.registerObserver(this);
 		ui.setVisible(true);
+		ui_connected.setVisible(true);
 	}
 
 	@Override
 	public int onLoop() throws InterruptedException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
