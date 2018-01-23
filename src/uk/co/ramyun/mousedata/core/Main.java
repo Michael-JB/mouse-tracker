@@ -11,7 +11,7 @@ public class Main extends Script {
 	 * @file Main.java
 	 */
 
-	private final MouseTracker mouseTracker = new MouseTracker();
+	private final MouseTracker mouseTracker = new MouseTracker(this);
 
 	@Override
 	public void onStart() {
