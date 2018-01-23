@@ -1,7 +1,6 @@
 package uk.co.ramyun.mousedata.ui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -31,14 +30,12 @@ public class Ui extends JFrame implements Observer, LocalImage {
 
 	public Ui() {
 
+		surface = new BufferedImage(765, 502, BufferedImage.TYPE_INT_RGB);
+
 		try {
 			surface = ImageIO.read(getStream("/map/OSRS_Blank.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-
-		if (surface == null) {
-			// Stop
 		}
 
 		view = new JLabel(new ImageIcon(surface));
