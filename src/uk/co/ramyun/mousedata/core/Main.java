@@ -18,8 +18,7 @@ public class Main extends Script implements Observer {
 
 	private final MouseTracker mouseTracker = new MouseTracker();
 	private final Logger logger = new Logger(this, "test1.txt");
-	private final Ui ui = new Ui(true, false, false);
-	private final Ui uiConnected = new Ui(true, true, false);
+	private final Ui ui = new Ui(this);
 
 	@Override
 	public void onStart() {
@@ -27,12 +26,10 @@ public class Main extends Script implements Observer {
 		getBot().addMouseListener(mouseTracker);
 
 		mouseTracker.registerObserver(ui);
-		mouseTracker.registerObserver(uiConnected);
 		mouseTracker.registerObserver(logger);
 		mouseTracker.registerObserver(this);
 
 		ui.setVisible(true);
-		uiConnected.setVisible(true);
 	}
 
 	@Override
