@@ -28,7 +28,7 @@ public class Main extends Script implements Observer {
 		getBot().addMouseListener(mouseTracker);
 
 		String fn = JOptionPane.showInputDialog("Enter data output file name:");
-		if (fn != null) logger = new Logger(this, fn + (fn.endsWith(".txt") ? "" : ".txt"));
+		if (fn != null) logger = new Logger(this, fn + (fn.endsWith(".csv") ? "" : ".csv"));
 
 		mouseTracker.registerObserver(ui);
 		if (logger != null) mouseTracker.registerObserver(logger);
