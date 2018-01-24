@@ -17,19 +17,27 @@ public class Main extends Script implements Observer {
 	 */
 
 	private final MouseTracker mouseTracker = new MouseTracker();
+	private final Logger logger = new Logger(this, "test1.txt");
+	private final Ui ui = new Ui(true, false, false);
+	private final Ui uiConnected = new Ui(true, true, false);
 
 	@Override
 	public void onStart() {
 		log("Script started: " + this.getName() + " by " + this.getAuthor() + ".");
 		getBot().addMouseListener(mouseTracker);
 
-		Ui ui = new Ui(true, false, false);
-		Ui ui_connected = new Ui(true, true, false);
 		mouseTracker.registerObserver(ui);
-		mouseTracker.registerObserver(ui_connected);
+		mouseTracker.registerObserver(uiConnected);
+		mouseTracker.registerObserver(logger);
 		mouseTracker.registerObserver(this);
+
 		ui.setVisible(true);
-		ui_connected.setVisible(true);
+		uiConnected.setVisible(true);
+	}
+
+	@Override
+	public void onExit() {
+		logger.save();
 	}
 
 	@Override
