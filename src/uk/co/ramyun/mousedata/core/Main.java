@@ -2,6 +2,8 @@ package uk.co.ramyun.mousedata.core;
 
 import java.awt.Point;
 
+import javax.swing.JOptionPane;
+
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
@@ -17,7 +19,7 @@ public class Main extends Script implements Observer {
 	 */
 
 	private final MouseTracker mouseTracker = new MouseTracker();
-	private final Logger logger = new Logger(this, "test1.txt");
+	private Logger logger;
 	private final Ui ui = new Ui(this);
 
 	@Override
@@ -25,8 +27,11 @@ public class Main extends Script implements Observer {
 		log("Script started: " + this.getName() + " by " + this.getAuthor() + ".");
 		getBot().addMouseListener(mouseTracker);
 
+		String fn = JOptionPane.showInputDialog("Enter data output file name:");
+		if (fn != null) logger = new Logger(this, fn + (fn.endsWith(".txt") ? "" : ".txt"));
+
 		mouseTracker.registerObserver(ui);
-		mouseTracker.registerObserver(logger);
+		if (logger != null) mouseTracker.registerObserver(logger);
 		mouseTracker.registerObserver(this);
 
 		ui.setVisible(true);
@@ -34,7 +39,7 @@ public class Main extends Script implements Observer {
 
 	@Override
 	public void onExit() {
-		logger.save();
+		if (logger != null) logger.save();
 	}
 
 	@Override
